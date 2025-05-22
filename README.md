@@ -1,3 +1,5 @@
+[![Ruby](https://github.com/crassone/crs-slack-client/actions/workflows/main.yml/badge.svg)](https://github.com/crassone/crs-slack-client/actions/workflows/main.yml)
+
 # Crs::Slack::Client
 
 ## Overview
