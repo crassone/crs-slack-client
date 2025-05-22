@@ -5,6 +5,7 @@ PATH
       httparty (~> 0.23.1)
       mime-types (~> 3.7)
       multipart-post (~> 2.4)
+      ostruct (~> 0.6.1)
 
 GEM
   remote: https://rubygems.org/
@@ -29,6 +30,7 @@ GEM
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
+    ostruct (0.6.1)
     parallel (1.27.0)
     parser (3.3.8.0)
       ast (~> 2.4.1)
