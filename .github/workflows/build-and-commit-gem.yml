@@ -3,7 +3,7 @@ name: Build and Commit Gem
 on:
   push:
     branches:
-      - main # ←必要ならブランチ名を変えてね
+      - main
 
 jobs:
   build-and-commit:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2" # 必要なバージョンに合わせてね
+          ruby-version: "3.4"
 
       - name: Build gem
         run: gem build crs-slack-client.gemspec
