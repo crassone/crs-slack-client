@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "httparty", "~> 0.23.1"
   spec.add_dependency "mime-types", "~> 3.7"
   spec.add_dependency "multipart-post", "~> 2.4"
+  spec.add_dependency "ostruct", "~> 0.9.6"
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
