@@ -3,7 +3,6 @@
 require "net/http"
 require "uri"
 require "json"
-require "debug"
 require "logger"
 require "net/http/post/multipart"
 require "mime/types"
