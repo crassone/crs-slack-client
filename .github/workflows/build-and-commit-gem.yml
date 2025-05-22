@@ -1,0 +1,32 @@
+name: Build and Commit Gem
+
+on:
+  push:
+    branches:
+      - main # ←必要ならブランチ名を変えてね
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2" # 必要なバージョンに合わせてね
+
+      - name: Build gem
+        run: gem build crs-slack-client.gemspec
+
+      - name: Commit and push .gem file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add *.gem
+          git commit -m "Add built gem [skip ci]" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
