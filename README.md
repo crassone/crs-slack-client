@@ -1,3 +1,4 @@
+[![Build and Commit Gem](https://github.com/crassone/crs-slack-client/actions/workflows/build-and-commit-gem.yml/badge.svg)](https://github.com/crassone/crs-slack-client/actions/workflows/build-and-commit-gem.yml)
 [![Ruby](https://github.com/crassone/crs-slack-client/actions/workflows/main.yml/badge.svg)](https://github.com/crassone/crs-slack-client/actions/workflows/main.yml)
 
 # Crs::Slack::Client
