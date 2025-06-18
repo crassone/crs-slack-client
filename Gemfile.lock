@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    crs-slack-client (0.1.0)
+    crs-slack-client (0.2.0)
       httparty (~> 0.23.1)
       mime-types (~> 3.7)
       multipart-post (~> 2.4)

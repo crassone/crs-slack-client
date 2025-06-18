@@ -89,6 +89,49 @@ RSpec.describe Crs::Slack::Client do
     end
   end
 
+  describe "#conversations_create" do
+    it "新しいチャンネルを作成できる（モック）" do
+      allow(client).to receive(:post).and_return({ "ok" => true, "channel" => { "id" => "C12345" } })
+      res = client.conversations_create(name: "new-channel")
+      expect(res["ok"]).to be true
+      expect(res["channel"]["id"]).to eq("C12345")
+    end
+    it "APIエラー時は例外を投げる" do
+      allow(client).to receive(:post).and_return({ "ok" => false, "error" => "channel_already_exists" })
+      expect do
+        client.conversations_create(name: "existing-channel")
+      end.to raise_error(Crs::Slack::Client::SlackApiError, /Error creating conversation/)
+    end
+  end
+
+  describe '#conversations_invite' do
+    it "チャンネルにユーザーを招待できる（モック）" do
+      allow(client).to receive(:post).and_return({ "ok" => true })
+      res = client.conversations_invite(channel: "C12345", users: ["U1", "U2"])
+      expect(res["ok"]).to be true
+    end
+    it "APIエラー時は例外を投げる" do
+      allow(client).to receive(:post).and_return({ "ok" => false, "error" => "channel_not_found" })
+      expect do
+        client.conversations_invite(channel: "C12345", users: ["U1", "U2"])
+      end.to raise_error(Crs::Slack::Client::SlackApiError, /Error inviting users/)
+    end
+  end
+
+  describe '#conversations_archive' do
+    it "チャンネルをアーカイブできる（モック）" do
+      allow(client).to receive(:post).and_return({ "ok" => true })
+      res = client.conversations_archive(channel: "C12345")
+      expect(res["ok"]).to be true
+    end
+    it "APIエラー時は例外を投げる" do
+      allow(client).to receive(:post).and_return({ "ok" => false, "error" => "channel_not_found" })
+      expect do
+        client.conversations_archive(channel: "C12345")
+      end.to raise_error(Crs::Slack::Client::SlackApiError, /Error archiving conversation/)
+    end
+  end
+
   describe Crs::Slack::Client::ImageUrl do
     it "urlとalt_textを持てる" do
       image = described_class.new(url: "https://example.com/img.png", alt_text: "img")

@@ -23,6 +23,8 @@ module Crs
         end
       end
 
+      class SlackApiError < StandardError; end
+
       attr_accessor :logger, :api_token
 
       def initialize(api_token:)
@@ -154,6 +156,47 @@ module Crs
         raise e
       end
 
+      # チャンネルを作成する
+      def conversations_create(name:, is_private: false)
+        uri = URI.join(SLACK_API_BASE_URL, "conversations.create")
+        params = {
+          name:,
+          is_private:
+        }
+
+        result = post(uri, params)
+        raise SlackApiError, "Error creating conversation: #{result["error"]}" unless result["ok"]
+
+        result
+      end
+
+      # チャンネルにユーザーを追加する
+      def conversations_invite(channel:, users:)
+        uri = URI.join(SLACK_API_BASE_URL, "conversations.invite")
+        params = {
+          channel: channel,
+          users: users.join(",") # ユーザーIDをカンマ区切りで指定
+        }
+        
+        result = post(uri, params)
+        raise SlackApiError, "Error inviting users: #{result["error"]}" unless result["ok"]
+
+        result
+      end
+
+      # チャンネルをアーカイブする
+      def conversations_archive(channel:)
+        uri = URI.join(SLACK_API_BASE_URL, "conversations.archive")
+        params = {
+          channel: channel
+        }
+        
+        result = post(uri, params)
+        raise SlackApiError, "Error archiving conversation: #{result["error"]}" unless result["ok"]
+
+        result
+      end
+
       private
 
       # Slack APIにGETリクエストを送信する
@@ -202,4 +245,39 @@ module Crs
       # end
     end
   end
+end
+
+if __FILE__ == $0
+  # NOTE:
+  # ワークスペースの設定で一般ユーザーへのpublic/privateチャンネルの作成権限が与えられていないため、以下のコードは
+  # 「Slack API error: restricted_action」エラーが発生する。
+  # が、権限の強い小木個人のuser tokenを使えばチャンネルを作ることができた
+  ENV["SLACK_API_TOKEN"] ||= "xxxx-xxxxxxxxx-xxxxxxxxx-xxxxxxxxx-xxxxxxxxx"
+  client = Crs::Slack::Client.new(api_token: ENV["SLACK_API_TOKEN"])
+
+  # 例: チャンネルを作成
+  response = client.conversations_create(name: "00_dev_crs-workflows-4") # 例: チャンネルを作成
+
+  # レスポンスの例)
+  # {
+  #   "ok": true,
+  #   "channel": {
+  #       "id": "C091L16ADB5",
+  #       "name": "00_develop",
+  #       "is_channel": true,
+  #       "is_group": false,
+  #       ~
+  puts response
+  raise "Slack API error: #{response["error"]}" unless response["ok"]
+
+  channel_id = response.dig("channel", "id")
+  puts "Created channel ID: #{channel_id}"
+
+  # 例: チャンネルにユーザーを追加
+  client.conversations_invite(channel: channel_id, users: %w[U08SW2M51ND]) # crs-workflow botをチャンネルに追加
+
+  sleep 12
+
+  # 例: チャンネルをアーカイブ
+  client.conversations_archive(channel: channel_id)
 end
