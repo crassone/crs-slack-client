@@ -86,6 +86,26 @@ module Crs
       end
       # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
+      def add_reply_2(channel:, thread_ts:, blocks:)
+        uri = URI.join(SLACK_API_BASE_URL, "chat.postMessage")
+
+        params = {
+          channel:,
+          thread_ts:,
+          blocks:
+        }
+
+        result = post(uri, params)
+        unless result["ok"]
+          logger.error("Error posting reply: #{result["error"]}")
+          raise SlackApiError, result["error"]
+        end
+        result
+      rescue StandardError => e
+        logger.error("Error posting reply: #{e.message}")
+        raise SlackApiError, "Error posting reply: #{e.message}"
+      end
+
       # SlackのDisplay Nameをキーとして、Slackユーザーの一覧を返す。
       # @return [Hash] Slackユーザーの一覧。
       # e.g) [ {"Slackbot" => {id: "USLACKBOT", display_name: "Slackbot", name: "slackbot", real_name: "Slackbot"}]

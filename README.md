@@ -33,6 +33,17 @@ Gemfile
 gem 'crs-slack-client', git: 'git@github.com:crassone/crs-slack-client.git'
 ```
 
+## 開発時の注意事項
+
+- specを実行する場合は、環境変数 `SLACK_API_TOKEN` を予めセットしておいてください
+
+```
+export SLACK_API_TOKEN='xoxb-xxxxxx-xxxx-xxxxxx'
+```
+
+
+## サンプルコード
+
 ```ruby
 require 'crs/slack/client'
 

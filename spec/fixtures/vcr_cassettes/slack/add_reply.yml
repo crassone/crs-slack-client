@@ -4,114 +4,173 @@ http_interactions:
     method: post
     uri: https://slack.com/api/chat.postMessage
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: channel=C08TH1GJPUZ&text=VCR%E3%83%86%E3%82%B9%E3%83%88%3A+%E7%94%BB%E5%83%8F%E4%BB%98%E3%81%8D%E3%83%AA%E3%83%97%E3%83%A9%E3%82%A4%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88
     headers:
-      Authorization:
-      - Bearer <SLACK_API_TOKEN>
-      Content-Type:
-      - application/x-www-form-urlencoded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
       User-Agent:
       - Ruby
+      Host:
+      - slack.com
+      Authorization:
+      - Bearer <SLACK_API_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 25 Jun 2025 02:47:20 GMT
+      - Wed, 25 Jun 2025 05:13:16 GMT
       Server:
       - Apache
+      Vary:
+      - Accept-Encoding
       X-Slack-Req-Id:
-      - 67890abcdef
-      X-Oauth-Scopes:
-      - chat:write,channels:read,channels:write,users:read
-      Access-Control-Expose-Headers:
-      - x-slack-req-id, retry-after
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Slack-Backend:
-      - r
+      - 2b864480acd96f657ab27ff85e55ca2d
       X-Content-Type-Options:
       - nosniff
+      X-Xss-Protection:
+      - '0'
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 26 Jul 1997 05:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Accepted-Oauth-Scopes:
+      - chat:write
+      X-Oauth-Scopes:
+      - users:read,chat:write,files:write,channels:manage,groups:write,im:write,mpim:write
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Referrer-Policy:
       - no-referrer
-      Vary:
-      - Accept-Encoding
-      Content-Type:
-      - application/json; charset=utf-8
+      X-Slack-Unique-Id:
+      - aFuFbNOmABGu69Msva1HIgAAEBU
+      X-Slack-Backend:
+      - r
+      Access-Control-Allow-Origin:
+      - "*"
+      Via:
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-civzhzau,envoy-edge-nrt-qknauuss
       Content-Length:
-      - '344'
-      X-Via:
-      - haproxy-www-iad2
-      X-Cache:
-      - Miss from cloudfront
+      - '1007'
+      X-Envoy-Attempt-Count:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '254'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-actg
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
     body:
-      encoding: UTF-8
-      string: '{"ok":true,"channel":"C08TH1GJPUZ","ts":"1719288440.123456","message":{"bot_id":"B12345678","type":"message","text":"VCRテスト:
-        画像付きリプライのテスト","user":"U12345678","ts":"1719288440.123456","app_id":"A12345678","blocks":[{"type":"rich_text","block_id":"12345","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"VCRテスト:
-        画像付きリプライのテスト"}]}]}],"team":"T12345678"}}'
-  recorded_at: Wed, 25 Jun 2025 02:47:20 GMT
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channel":"C08TH1GJPUZ","ts":"1750828396.488809","message":{"user":"U08SW2M51ND","type":"message","ts":"1750828396.488809","bot_id":"B08SW2M4XA5","app_id":"A08SJUL5082","text":"VCR\u30c6\u30b9\u30c8:
+        \u753b\u50cf\u4ed8\u304d\u30ea\u30d7\u30e9\u30a4\u306e\u30c6\u30b9\u30c8","team":"TJYFMDGA3","bot_profile":{"id":"B08SW2M4XA5","app_id":"A08SJUL5082","user_id":"U08SW2M51ND","name":"crs-workflow","icons":{"image_36":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_36.png","image_48":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_48.png","image_72":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_72.png"},"deleted":false,"updated":1747727007,"team_id":"TJYFMDGA3"},"blocks":[{"type":"rich_text","block_id":"gNHD","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"VCR\u30c6\u30b9\u30c8:
+        \u753b\u50cf\u4ed8\u304d\u30ea\u30d7\u30e9\u30a4\u306e\u30c6\u30b9\u30c8"}]}]}]}}'
+  recorded_at: Wed, 25 Jun 2025 05:13:16 GMT
 - request:
     method: post
     uri: https://slack.com/api/chat.postMessage
     body:
-      encoding: UTF-8
-      string: channel=C08TH1GJPUZ&thread_ts=1719288440.123456&blocks=%5B%7B%22type%22%3A%22image%22%2C%22image_url%22%3A%22https%3A%2F%2Fimage.lgtmoon.dev%2F517710%22%2C%22alt_text%22%3A%22LGTM%E7%94%BB%E5%83%8F%22%7D%5D
+      encoding: US-ASCII
+      string: channel=C08TH1GJPUZ&thread_ts=1750828396.488809&blocks=%5B%7B%22type%22%3A%22image%22%2C%22image_url%22%3A%22https%3A%2F%2Fimage.lgtmoon.dev%2F517710%22%2C%22alt_text%22%3A%22LGTM%E7%94%BB%E5%83%8F%22%7D%5D
     headers:
-      Authorization:
-      - Bearer <SLACK_API_TOKEN>
-      Content-Type:
-      - application/x-www-form-urlencoded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
       User-Agent:
       - Ruby
+      Host:
+      - slack.com
+      Authorization:
+      - Bearer <SLACK_API_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 25 Jun 2025 02:47:25 GMT
+      - Wed, 25 Jun 2025 05:13:16 GMT
       Server:
       - Apache
+      Vary:
+      - Accept-Encoding
       X-Slack-Req-Id:
-      - 13579abcdef
-      X-Oauth-Scopes:
-      - chat:write,channels:read,channels:write,users:read
-      Access-Control-Expose-Headers:
-      - x-slack-req-id, retry-after
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Slack-Backend:
-      - r
+      - f03e630792ebab47db6d616720c15e20
       X-Content-Type-Options:
       - nosniff
+      X-Xss-Protection:
+      - '0'
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 26 Jul 1997 05:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Accepted-Oauth-Scopes:
+      - chat:write
+      X-Oauth-Scopes:
+      - users:read,chat:write,files:write,channels:manage,groups:write,im:write,mpim:write
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Referrer-Policy:
       - no-referrer
-      Vary:
-      - Accept-Encoding
-      Content-Type:
-      - application/json; charset=utf-8
+      X-Slack-Unique-Id:
+      - aFuFbGehFUE9GDmTmkP8mAAAAC4
+      X-Slack-Backend:
+      - r
+      Access-Control-Allow-Origin:
+      - "*"
+      Via:
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-poqvcspt,envoy-edge-nrt-hpwtbwjg
       Content-Length:
-      - '344'
-      X-Via:
-      - haproxy-www-iad2
-      X-Cache:
-      - Miss from cloudfront
+      - '997'
+      X-Envoy-Attempt-Count:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '337'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-gfbd
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
     body:
-      encoding: UTF-8
-      string: '{"ok":true,"channel":"C08TH1GJPUZ","ts":"1719288445.123456","message":{"bot_id":"B12345678","type":"message","text":"","user":"U12345678","ts":"1719288445.123456","thread_ts":"1719288440.123456","app_id":"A12345678","blocks":[{"type":"image","block_id":"12345","image_url":"https://image.lgtmoon.dev/517710","alt_text":"LGTM画像"}],"team":"T12345678"}}'
-  recorded_at: Wed, 25 Jun 2025 02:47:25 GMT
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channel":"C08TH1GJPUZ","ts":"1750828396.900449","message":{"user":"U08SW2M51ND","type":"message","ts":"1750828396.900449","bot_id":"B08SW2M4XA5","app_id":"A08SJUL5082","text":"LGTM\u753b\u50cf","team":"TJYFMDGA3","bot_profile":{"id":"B08SW2M4XA5","app_id":"A08SJUL5082","user_id":"U08SW2M51ND","name":"crs-workflow","icons":{"image_36":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_36.png","image_48":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_48.png","image_72":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_72.png"},"deleted":false,"updated":1747727007,"team_id":"TJYFMDGA3"},"thread_ts":"1750828396.488809","parent_user_id":"U08SW2M51ND","blocks":[{"type":"image","block_id":"2aDNk","image_url":"https:\/\/image.lgtmoon.dev\/517710","alt_text":"LGTM\u753b\u50cf","image_width":283,"image_height":400,"image_bytes":66719,"is_animated":true,"fallback":"283x400px
+        image"}]}}'
+  recorded_at: Wed, 25 Jun 2025 05:13:16 GMT
 recorded_with: VCR 6.3.1

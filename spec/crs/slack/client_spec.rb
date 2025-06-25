@@ -181,6 +181,94 @@ RSpec.describe Crs::Slack::Client do
       end
     end
 
+    describe "#add_reply_2" do
+      context "テキストのみをpostする場合", vcr: { cassette_name: "slack/add_reply_2_only_text" } do
+        let(:blocks) do
+          JSON.generate([
+                          {
+                            type: "section",
+                            text: {
+                              type: "mrkdwn",
+                              text: "これはテキストのみのメッセージです。"
+                            }
+                          }
+                        ])
+        end
+
+        it do
+          res = vcr_client.add_reply_2(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
+          expect(res["ok"]).to be true
+          expect(res["message"]["text"]).to eq("これはテキストのみのメッセージです。")
+          expect(res["message"]["blocks"].size).to eq(1)
+          expect(res["message"]["blocks"][0]["type"]).to eq("section")
+          expect(res["message"]["blocks"][0]["text"]["type"]).to eq("mrkdwn")
+          expect(res["message"]["blocks"][0]["text"]["text"]).to eq("これはテキストのみのメッセージです。")
+        end
+      end
+
+      context "画像のみを添付する場合", vcr: { cassette_name: "slack/add_reply_2" } do
+        let(:blocks) do
+          JSON.generate([
+                          {
+                            type: "image",
+                            image_url: "https://image.lgtmoon.dev/517710",
+                            alt_text: "LGTM画像1"
+                          },
+                          {
+                            type: "image",
+                            image_url: "https://image.lgtmoon.dev/135310",
+                            alt_text: "LGTM画像2"
+                          }
+                        ])
+        end
+
+        it do
+          res = vcr_client.add_reply_2(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
+          expect(res["ok"]).to be true
+          expect(res["message"]["text"]).to eq("LGTM画像1 LGTM画像2")
+          expect(res["message"]["blocks"].size).to eq(2)
+          expect(res["message"]["blocks"][0]["type"]).to eq("image")
+          expect(res["message"]["blocks"][0]["image_url"]).to eq("https://image.lgtmoon.dev/517710")
+          expect(res["message"]["blocks"][0]["alt_text"]).to eq("LGTM画像1")
+          expect(res["message"]["blocks"][1]["type"]).to eq("image")
+          expect(res["message"]["blocks"][1]["image_url"]).to eq("https://image.lgtmoon.dev/135310")
+          expect(res["message"]["blocks"][1]["alt_text"]).to eq("LGTM画像2")
+        end
+      end
+
+      context "テキストと画像を組み合わせる場合", vcr: { cassette_name: "slack/add_reply_2_text_and_image" } do
+        let(:blocks) do
+          JSON.generate([
+                          {
+                            type: "section",
+                            text: {
+                              type: "mrkdwn",
+                              text: "これはテキストと画像の組み合わせです。"
+                            }
+                          },
+                          {
+                            type: "image",
+                            image_url: "https://image.lgtmoon.dev/517710",
+                            alt_text: "LGTM画像1"
+                          }
+                        ])
+        end
+
+        it do
+          res = vcr_client.add_reply_2(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
+          expect(res["ok"]).to be true
+          expect(res["message"]["text"]).to eq("これはテキストと画像の組み合わせです。 LGTM画像1")
+          expect(res["message"]["blocks"].size).to eq(2)
+          expect(res["message"]["blocks"][0]["type"]).to eq("section")
+          expect(res["message"]["blocks"][0]["text"]["type"]).to eq("mrkdwn")
+          expect(res["message"]["blocks"][0]["text"]["text"]).to eq("これはテキストと画像の組み合わせです。")
+          expect(res["message"]["blocks"][1]["type"]).to eq("image")
+          expect(res["message"]["blocks"][1]["image_url"]).to eq("https://image.lgtmoon.dev/517710")
+          expect(res["message"]["blocks"][1]["alt_text"]).to eq("LGTM画像1")
+        end
+      end
+    end
+
     describe "#users_list", vcr: { cassette_name: "slack/users_list" } do
       it "ユーザー一覧を取得できる" do
         users = vcr_client.users_list
