@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "debug"
+
 RSpec.describe Crs::Slack::Client do
   let(:api_token) { "dummy-token" }
   let(:client) { described_class.new(api_token: api_token) }
@@ -160,7 +162,7 @@ RSpec.describe Crs::Slack::Client do
       it "スレッドに画像付きリプライを送信できる" do
         # まずメッセージを送信
         message = vcr_client.chat_post_message(
-          channel: "C08TH1GJPUZ", # テスト用チャンネルID
+          channel: "C08TH1GJPUZ", # 00_開発_crs-workflow_開発用
           text: "VCRテスト: 画像付きリプライのテスト"
         )
 
@@ -171,7 +173,7 @@ RSpec.describe Crs::Slack::Client do
         )
 
         response = vcr_client.add_reply(
-          channel: "C08TH1GJPUZ",
+          channel: "C08TH1GJPUZ", # 00_開発_crs-workflow_開発用
           thread_ts: message["ts"],
           image_urls: [image_url]
         )
@@ -302,16 +304,13 @@ RSpec.describe Crs::Slack::Client do
     describe "#conversations_invite", vcr: { cassette_name: "slack/conversations_invite" } do
       it "チャンネルにユーザーを招待できる" do
         # VCRカセットに合わせた固定のチャンネル名を使用
-        channel_name = "vcr-invite-test-1719288465"
+        channel_name = "vcr-invite-test-1750836515"
         channel = vcr_client.conversations_create(name: channel_name)
-
-        # ユーザー一覧を取得して最初のユーザーを招待
-        users = vcr_client.users_list
-        first_user_id = users.values.first[:id]
+        user_id = "UN8BCP1F1" # botアカウントは追加できない & SLACK_API_TOKENは小木のアカウントで発行していることから小木のアカウントIDを指定すると"cant_invite_self"が発生するため、別のユーザーIDを指定
 
         response = vcr_client.conversations_invite(
           channel: channel["channel"]["id"],
-          users: [first_user_id]
+          users: [user_id]
         )
 
         expect(response["ok"]).to be true
@@ -324,7 +323,7 @@ RSpec.describe Crs::Slack::Client do
     describe "#conversations_archive", vcr: { cassette_name: "slack/conversations_archive" } do
       it "チャンネルをアーカイブできる" do
         # VCRカセットに合わせた固定のチャンネル名を使用
-        channel_name = "vcr-archive-test-1719288485"
+        channel_name = "vcr-archive-test-1750836811"
         channel = vcr_client.conversations_create(name: channel_name)
 
         # チャンネルをアーカイブ

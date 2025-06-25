@@ -4,58 +4,87 @@ http_interactions:
     method: post
     uri: https://slack.com/api/chat.postMessage
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: channel=C08TH1GJPUZ&text=VCR%E3%83%86%E3%82%B9%E3%83%88%3A+%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF%EF%BC%81
     headers:
-      Authorization:
-      - Bearer <SLACK_API_TOKEN>
-      Content-Type:
-      - application/x-www-form-urlencoded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
       User-Agent:
       - Ruby
+      Host:
+      - slack.com
+      Authorization:
+      - Bearer <SLACK_API_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 25 Jun 2025 02:47:15 GMT
+      - Wed, 25 Jun 2025 06:11:31 GMT
       Server:
       - Apache
+      Vary:
+      - Accept-Encoding
       X-Slack-Req-Id:
-      - 12345abcdef
-      X-Oauth-Scopes:
-      - chat:write,channels:read,channels:write,users:read
-      Access-Control-Expose-Headers:
-      - x-slack-req-id, retry-after
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Slack-Backend:
-      - r
+      - 8640daaefe077832bd81ee63fab02272
       X-Content-Type-Options:
       - nosniff
+      X-Xss-Protection:
+      - '0'
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 26 Jul 1997 05:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Accepted-Oauth-Scopes:
+      - chat:write
+      X-Oauth-Scopes:
+      - users:read,chat:write,files:write,channels:manage,groups:write,im:write,mpim:write
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Referrer-Policy:
       - no-referrer
-      Vary:
-      - Accept-Encoding
-      Content-Type:
-      - application/json; charset=utf-8
+      X-Slack-Unique-Id:
+      - aFuTE-lOZCb3bPDypMFBqgAAECE
+      X-Slack-Backend:
+      - r
+      Access-Control-Allow-Origin:
+      - "*"
+      Via:
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-odzyrdlb,envoy-edge-nrt-tkvnxnnr
       Content-Length:
-      - '344'
-      X-Via:
-      - haproxy-www-iad2
-      X-Cache:
-      - Miss from cloudfront
+      - '934'
+      X-Envoy-Attempt-Count:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '247'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-ohkw
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
     body:
-      encoding: UTF-8
-      string: '{"ok":true,"channel":"C08TH1GJPUZ","ts":"1719288435.123456","message":{"bot_id":"B12345678","type":"message","text":"VCRテスト:
-        こんにちは！","user":"U12345678","ts":"1719288435.123456","app_id":"A12345678","blocks":[{"type":"rich_text","block_id":"12345","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"VCRテスト:
-        こんにちは！"}]}]}],"team":"T12345678"}}'
-  recorded_at: Wed, 25 Jun 2025 02:47:15 GMT
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channel":"C08TH1GJPUZ","ts":"1750831891.922489","message":{"user":"U08SW2M51ND","type":"message","ts":"1750831891.922489","bot_id":"B08SW2M4XA5","app_id":"A08SJUL5082","text":"VCR\u30c6\u30b9\u30c8:
+        \u3053\u3093\u306b\u3061\u306f\uff01","team":"TJYFMDGA3","bot_profile":{"id":"B08SW2M4XA5","app_id":"A08SJUL5082","user_id":"U08SW2M51ND","name":"crs-workflow","icons":{"image_36":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_36.png","image_48":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_48.png","image_72":"https:\/\/avatars.slack-edge.com\/2025-05-20\/8914387701363_1d1b43d3cea11a502692_72.png"},"deleted":false,"updated":1747727007,"team_id":"TJYFMDGA3"},"blocks":[{"type":"rich_text","block_id":"ZjW","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"VCR\u30c6\u30b9\u30c8:
+        \u3053\u3093\u306b\u3061\u306f\uff01"}]}]}]}}'
+  recorded_at: Wed, 25 Jun 2025 06:11:32 GMT
 recorded_with: VCR 6.3.1
