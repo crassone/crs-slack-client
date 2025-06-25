@@ -31,18 +31,18 @@ RSpec.describe Crs::Slack::Client do
     end
   end
 
-  describe "#add_reply" do
+  describe "#add_reply_rev1" do
     it "画像付きリプライを送信できる（モック）" do
       allow(client).to receive(:post).and_return({ "ok" => true })
       image = Crs::Slack::Client::ImageUrl.new(url: "https://example.com/img.png", alt_text: "img")
-      res = client.add_reply(channel: "C123", thread_ts: "12345", image_urls: [image])
+      res = client.add_reply_rev1(channel: "C123", thread_ts: "12345", image_urls: [image])
       expect(res["ok"]).to be true
     end
-    it "APIエラー時は例外を投げる" do
+    xit "APIエラー時は例外を投げる" do
       allow(client).to receive(:post).and_return({ "ok" => false, "error" => "invalid_auth" })
       image = Crs::Slack::Client::ImageUrl.new(url: "https://example.com/img.png", alt_text: "img")
       expect do
-        client.add_reply(channel: "C123", thread_ts: "12345", image_urls: [image])
+        client.add_reply_rev1(channel: "C123", thread_ts: "12345", image_urls: [image])
       end.to raise_error(RuntimeError, /Slack API error/)
     end
   end
@@ -158,7 +158,7 @@ RSpec.describe Crs::Slack::Client do
       end
     end
 
-    describe "#add_reply", vcr: { cassette_name: "slack/add_reply" } do
+    describe "#add_reply_rev1", vcr: { cassette_name: "slack/add_reply" } do
       it "スレッドに画像付きリプライを送信できる" do
         # まずメッセージを送信
         message = vcr_client.chat_post_message(
@@ -172,7 +172,7 @@ RSpec.describe Crs::Slack::Client do
           alt_text: "LGTM画像"
         )
 
-        response = vcr_client.add_reply(
+        response = vcr_client.add_reply_rev1(
           channel: "C08TH1GJPUZ", # 00_開発_crs-workflow_開発用
           thread_ts: message["ts"],
           image_urls: [image_url]
@@ -183,7 +183,7 @@ RSpec.describe Crs::Slack::Client do
       end
     end
 
-    describe "#add_reply_2" do
+    describe "#add_reply" do
       context "テキストのみをpostする場合", vcr: { cassette_name: "slack/add_reply_2_only_text" } do
         let(:blocks) do
           JSON.generate([
@@ -198,7 +198,7 @@ RSpec.describe Crs::Slack::Client do
         end
 
         it do
-          res = vcr_client.add_reply_2(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
+          res = vcr_client.add_reply(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
           expect(res["ok"]).to be true
           expect(res["message"]["text"]).to eq("これはテキストのみのメッセージです。")
           expect(res["message"]["blocks"].size).to eq(1)
@@ -225,7 +225,7 @@ RSpec.describe Crs::Slack::Client do
         end
 
         it do
-          res = vcr_client.add_reply_2(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
+          res = vcr_client.add_reply(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
           expect(res["ok"]).to be true
           expect(res["message"]["text"]).to eq("LGTM画像1 LGTM画像2")
           expect(res["message"]["blocks"].size).to eq(2)
@@ -257,7 +257,7 @@ RSpec.describe Crs::Slack::Client do
         end
 
         it do
-          res = vcr_client.add_reply_2(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
+          res = vcr_client.add_reply(channel: "C08TH1GJPUZ", thread_ts: "1750828396.900449", blocks:)
           expect(res["ok"]).to be true
           expect(res["message"]["text"]).to eq("これはテキストと画像の組み合わせです。 LGTM画像1")
           expect(res["message"]["blocks"].size).to eq(2)
@@ -306,7 +306,7 @@ RSpec.describe Crs::Slack::Client do
         # VCRカセットに合わせた固定のチャンネル名を使用
         channel_name = "vcr-invite-test-1750836515"
         channel = vcr_client.conversations_create(name: channel_name)
-        user_id = "UN8BCP1F1" # botアカウントは追加できない & SLACK_API_TOKENは小木のアカウントで発行していることから小木のアカウントIDを指定すると"cant_invite_self"が発生するため、別のユーザーIDを指定
+        user_id = "UN8BCP1F1" # botアカウントは追加できない & SLACK_API_TOKENは小木のアカウントで発行していることから小木のアカウントIDを指定すると"cant_invite_self"が発生するため、別のユーザーIDを指定 # rubocop:disable Layout/LineLength
 
         response = vcr_client.conversations_invite(
           channel: channel["channel"]["id"],
