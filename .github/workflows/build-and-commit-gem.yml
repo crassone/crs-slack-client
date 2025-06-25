@@ -30,3 +30,11 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # リリースタグを設定する
+      - name: Create release tag
+        run: |
+          git tag -a "v$(ruby -e 'puts Gem::Specification.load("crs-slack-client.gemspec").version')" -m "Release version"
+          git push origin --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
