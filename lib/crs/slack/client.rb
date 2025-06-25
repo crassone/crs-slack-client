@@ -13,6 +13,7 @@ require_relative "client/version"
 
 module Crs
   module Slack
+    # Slack APIを操作するクライアントクラス
     class Client
       SLACK_API_BASE_URL = "https://slack.com/api/"
 
@@ -55,7 +56,7 @@ module Crs
         raise e
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       def add_reply(channel:, thread_ts:, image_urls:)
         uri = URI.join(SLACK_API_BASE_URL, "chat.postMessage")
 
@@ -83,11 +84,12 @@ module Crs
         logger.error("Error posting reply: #{e.message}")
         raise e
       end
-      # rubocop:enable Metrics/MethodLength
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       # SlackのDisplay Nameをキーとして、Slackユーザーの一覧を返す。
       # @return [Hash] Slackユーザーの一覧。
       # e.g) [ {"Slackbot" => {id: "USLACKBOT", display_name: "Slackbot", name: "slackbot", real_name: "Slackbot"}]
+      # rubocop:disable Metrics/AbcSize
       def users_list
         # レスポンスのサンプル
         #
@@ -155,6 +157,7 @@ module Crs
         logger.error("Error fetching users: #{e.message}")
         raise e
       end
+      # rubocop:enable Metrics/AbcSize
 
       # チャンネルを作成する
       def conversations_create(name:, is_private: false)
@@ -177,7 +180,7 @@ module Crs
           channel: channel,
           users: users.join(",") # ユーザーIDをカンマ区切りで指定
         }
-        
+
         result = post(uri, params)
         raise SlackApiError, "Error inviting users: #{result["error"]}" unless result["ok"]
 
@@ -190,7 +193,7 @@ module Crs
         params = {
           channel: channel
         }
-        
+
         result = post(uri, params)
         raise SlackApiError, "Error archiving conversation: #{result["error"]}" unless result["ok"]
 
@@ -200,6 +203,7 @@ module Crs
       private
 
       # Slack APIにGETリクエストを送信する
+      # rubocop:disable Metrics/AbcSize
       def get(path, params = {})
         uri = URI.join(SLACK_API_BASE_URL, path)
         uri.query = URI.encode_www_form(params) unless params.empty?
@@ -217,8 +221,10 @@ module Crs
 
         result
       end
+      # rubocop:enable Metrics/AbcSize
 
       # Slack APIにPOSTリクエストを送信する
+      # rubocop:disable Metrics/AbcSize
       def post(path, params = {})
         uri = URI.join(SLACK_API_BASE_URL, path)
 
@@ -239,17 +245,13 @@ module Crs
         logger.error("Error posting to Slack: #{e.message}")
         raise e
       end
-
-      # def api_token
-      #   @api_token ||= ENV['SLACK_API_TOKEN']
-      # end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
 
-if __FILE__ == $0
-  # NOTE:
-  # ワークスペースの設定で一般ユーザーへのpublic/privateチャンネルの作成権限が与えられていないため、以下のコードは
+if __FILE__ == $PROGRAM_NAME
+  # NOTE: ワークスペースの設定で一般ユーザーへのpublic/privateチャンネルの作成権限が与えられていないため、以下のコードは
   # 「Slack API error: restricted_action」エラーが発生する。
   # が、権限の強い小木個人のuser tokenを使えばチャンネルを作ることができた
   ENV["SLACK_API_TOKEN"] ||= "xxxx-xxxxxxxxx-xxxxxxxxx-xxxxxxxxx-xxxxxxxxx"

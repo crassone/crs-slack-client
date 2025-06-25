@@ -5,6 +5,7 @@ require "vcr"
 require "webmock/rspec"
 
 # VCRの設定
+# rubocop:disable Metrics/BlockLength
 VCR.configure do |config|
   config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   config.hook_into :webmock
@@ -56,6 +57,7 @@ VCR.configure do |config|
     allow_playback_repeats: true # 同じリクエストの再生を許可
   }
 end
+# rubocop:enable Metrics/BlockLength
 
 # テスト用のヘルパーメソッド
 module SlackApiHelpers
