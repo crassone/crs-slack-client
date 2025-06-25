@@ -1,0 +1,117 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/chat.postMessage
+    body:
+      encoding: UTF-8
+      string: channel=C08TH1GJPUZ&text=VCR%E3%83%86%E3%82%B9%E3%83%88%3A+%E7%94%BB%E5%83%8F%E4%BB%98%E3%81%8D%E3%83%AA%E3%83%97%E3%83%A9%E3%82%A4%E3%81%AE%E3%83%86%E3%82%B9%E3%83%88
+    headers:
+      Authorization:
+      - Bearer <SLACK_API_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 25 Jun 2025 02:47:20 GMT
+      Server:
+      - Apache
+      X-Slack-Req-Id:
+      - 67890abcdef
+      X-Oauth-Scopes:
+      - chat:write,channels:read,channels:write,users:read
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Slack-Backend:
+      - r
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Referrer-Policy:
+      - no-referrer
+      Vary:
+      - Accept-Encoding
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '344'
+      X-Via:
+      - haproxy-www-iad2
+      X-Cache:
+      - Miss from cloudfront
+    body:
+      encoding: UTF-8
+      string: '{"ok":true,"channel":"C08TH1GJPUZ","ts":"1719288440.123456","message":{"bot_id":"B12345678","type":"message","text":"VCRテスト:
+        画像付きリプライのテスト","user":"U12345678","ts":"1719288440.123456","app_id":"A12345678","blocks":[{"type":"rich_text","block_id":"12345","elements":[{"type":"rich_text_section","elements":[{"type":"text","text":"VCRテスト:
+        画像付きリプライのテスト"}]}]}],"team":"T12345678"}}'
+  recorded_at: Wed, 25 Jun 2025 02:47:20 GMT
+- request:
+    method: post
+    uri: https://slack.com/api/chat.postMessage
+    body:
+      encoding: UTF-8
+      string: channel=C08TH1GJPUZ&thread_ts=1719288440.123456&blocks=%5B%7B%22type%22%3A%22image%22%2C%22image_url%22%3A%22https%3A%2F%2Fimage.lgtmoon.dev%2F517710%22%2C%22alt_text%22%3A%22LGTM%E7%94%BB%E5%83%8F%22%7D%5D
+    headers:
+      Authorization:
+      - Bearer <SLACK_API_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 25 Jun 2025 02:47:25 GMT
+      Server:
+      - Apache
+      X-Slack-Req-Id:
+      - 13579abcdef
+      X-Oauth-Scopes:
+      - chat:write,channels:read,channels:write,users:read
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Slack-Backend:
+      - r
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Referrer-Policy:
+      - no-referrer
+      Vary:
+      - Accept-Encoding
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '344'
+      X-Via:
+      - haproxy-www-iad2
+      X-Cache:
+      - Miss from cloudfront
+    body:
+      encoding: UTF-8
+      string: '{"ok":true,"channel":"C08TH1GJPUZ","ts":"1719288445.123456","message":{"bot_id":"B12345678","type":"message","text":"","user":"U12345678","ts":"1719288445.123456","thread_ts":"1719288440.123456","app_id":"A12345678","blocks":[{"type":"image","block_id":"12345","image_url":"https://image.lgtmoon.dev/517710","alt_text":"LGTM画像"}],"team":"T12345678"}}'
+  recorded_at: Wed, 25 Jun 2025 02:47:25 GMT
+recorded_with: VCR 6.3.1
