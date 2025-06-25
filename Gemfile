@@ -14,3 +14,5 @@ gem "rubocop", "~> 1.21"
 # HTTP request recording and playback for testing
 gem "vcr", "~> 6.2"
 gem "webmock", "~> 3.19"
+
+gem "debug", "~> 1.11"

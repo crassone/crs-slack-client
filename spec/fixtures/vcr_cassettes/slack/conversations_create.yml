@@ -4,112 +4,170 @@ http_interactions:
     method: post
     uri: https://slack.com/api/conversations.create
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: name=vcr-test-1719288455&is_private=false
     headers:
-      Authorization:
-      - Bearer <SLACK_API_TOKEN>
-      Content-Type:
-      - application/x-www-form-urlencoded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
       User-Agent:
       - Ruby
+      Host:
+      - slack.com
+      Authorization:
+      - Bearer <SLACK_API_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 25 Jun 2025 02:47:35 GMT
+      - Wed, 25 Jun 2025 07:04:14 GMT
       Server:
       - Apache
+      Vary:
+      - Accept-Encoding
       X-Slack-Req-Id:
-      - 97531abcdef
-      X-Oauth-Scopes:
-      - chat:write,channels:read,channels:write,users:read
-      Access-Control-Expose-Headers:
-      - x-slack-req-id, retry-after
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Slack-Backend:
-      - r
+      - 2811cec38d72f43025e092cf32bbd963
       X-Content-Type-Options:
       - nosniff
+      X-Xss-Protection:
+      - '0'
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 26 Jul 1997 05:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Accepted-Oauth-Scopes:
+      - channels:write,groups:write,mpim:write,im:write,post
+      X-Oauth-Scopes:
+      - identify,channels:write,groups:write,im:write,mpim:write
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Referrer-Policy:
       - no-referrer
-      Vary:
-      - Accept-Encoding
-      Content-Type:
-      - application/json; charset=utf-8
+      X-Slack-Unique-Id:
+      - aFufbXXcFsDUmq1YP8SqggAAkBI
+      X-Slack-Backend:
+      - r
+      Access-Control-Allow-Origin:
+      - "*"
+      Via:
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-jzvhnonh,envoy-edge-nrt-mardqjrj
       Content-Length:
-      - '512'
-      X-Via:
-      - haproxy-www-iad2
-      X-Cache:
-      - Miss from cloudfront
+      - '727'
+      X-Envoy-Attempt-Count:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '497'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-opef
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
     body:
-      encoding: UTF-8
-      string: '{"ok":true,"channel":{"id":"C12345678","name":"vcr-test-1719288455","is_channel":true,"is_group":false,"is_im":false,"created":1719288455,"is_archived":false,"is_general":false,"unlinked":0,"name_normalized":"vcr-test-1719288455","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"TJYFMDGA3","updated":1719288455,"parent_conversation":null,"creator":"U08RW7MHUG6","is_ext_shared":false,"shared_team_ids":["TJYFMDGA3"],"pending_connected_team_ids":[],"is_member":true,"topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"","creator":"","last_set":0},"previous_names":[],"num_members":1}}'
-  recorded_at: Wed, 25 Jun 2025 02:47:35 GMT
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"channel":{"id":"C092WRKQWG5","name":"vcr-test-1719288455","is_channel":true,"is_group":false,"is_im":false,"is_mpim":false,"is_private":false,"created":1750835053,"is_archived":false,"is_general":false,"unlinked":0,"name_normalized":"vcr-test-1719288455","is_shared":false,"is_org_shared":false,"is_pending_ext_shared":false,"pending_shared":[],"context_team_id":"TJYFMDGA3","updated":1750835053934,"parent_conversation":null,"creator":"U02V6STDTLP","is_ext_shared":false,"shared_team_ids":["TJYFMDGA3"],"pending_connected_team_ids":[],"is_member":true,"last_read":"0000000000.000000","topic":{"value":"","creator":"","last_set":0},"purpose":{"value":"","creator":"","last_set":0},"previous_names":[],"priority":0}}'
+  recorded_at: Wed, 25 Jun 2025 07:04:14 GMT
 - request:
     method: post
     uri: https://slack.com/api/conversations.archive
     body:
-      encoding: UTF-8
-      string: channel=C12345678
+      encoding: US-ASCII
+      string: channel=C092WRKQWG5
     headers:
-      Authorization:
-      - Bearer <SLACK_API_TOKEN>
-      Content-Type:
-      - application/x-www-form-urlencoded
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
       User-Agent:
       - Ruby
+      Host:
+      - slack.com
+      Authorization:
+      - Bearer <SLACK_API_TOKEN>
+      Content-Type:
+      - application/x-www-form-urlencoded
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 25 Jun 2025 02:47:40 GMT
+      - Wed, 25 Jun 2025 07:04:14 GMT
       Server:
       - Apache
+      Vary:
+      - Accept-Encoding
       X-Slack-Req-Id:
-      - 86420abcdef
-      X-Oauth-Scopes:
-      - chat:write,channels:read,channels:write,users:read
-      Access-Control-Expose-Headers:
-      - x-slack-req-id, retry-after
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Slack-Backend:
-      - r
+      - 66f5399adabab73e3274d7537f2a64af
       X-Content-Type-Options:
       - nosniff
+      X-Xss-Protection:
+      - '0'
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 26 Jul 1997 05:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Accepted-Oauth-Scopes:
+      - channels:write,groups:write,mpim:write,im:write,post
+      X-Oauth-Scopes:
+      - identify,channels:write,groups:write,im:write,mpim:write
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Referrer-Policy:
       - no-referrer
-      Vary:
-      - Accept-Encoding
-      Content-Type:
-      - application/json; charset=utf-8
+      X-Slack-Unique-Id:
+      - aFufbtN6zluR8N9TVoJrHwAAoAg
+      X-Slack-Backend:
+      - r
+      Access-Control-Allow-Origin:
+      - "*"
       Content-Length:
       - '11'
-      X-Via:
-      - haproxy-www-iad2
-      X-Cache:
-      - Miss from cloudfront
+      Via:
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-pbxpodvt,envoy-edge-nrt-zozazlxh
+      X-Envoy-Attempt-Count:
+      - '1'
+      X-Envoy-Upstream-Service-Time:
+      - '345'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-omhf
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
     body:
       encoding: UTF-8
       string: '{"ok":true}'
-  recorded_at: Wed, 25 Jun 2025 02:47:40 GMT
+  recorded_at: Wed, 25 Jun 2025 07:04:14 GMT
 recorded_with: VCR 6.3.1
