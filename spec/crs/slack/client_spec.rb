@@ -13,6 +13,7 @@ RSpec.describe Crs::Slack::Client do
     end
   end
 
+  # モックを使用した既存のテスト
   describe "#chat_post_message" do
     it "Slack APIにPOSTして結果を返す（モック）" do
       allow(client).to receive(:post).and_return({ "ok" => true, "ts" => "12345" })
@@ -104,21 +105,21 @@ RSpec.describe Crs::Slack::Client do
     end
   end
 
-  describe '#conversations_invite' do
+  describe "#conversations_invite" do
     it "チャンネルにユーザーを招待できる（モック）" do
       allow(client).to receive(:post).and_return({ "ok" => true })
-      res = client.conversations_invite(channel: "C12345", users: ["U1", "U2"])
+      res = client.conversations_invite(channel: "C12345", users: %w[U1 U2])
       expect(res["ok"]).to be true
     end
     it "APIエラー時は例外を投げる" do
       allow(client).to receive(:post).and_return({ "ok" => false, "error" => "channel_not_found" })
       expect do
-        client.conversations_invite(channel: "C12345", users: ["U1", "U2"])
+        client.conversations_invite(channel: "C12345", users: %w[U1 U2])
       end.to raise_error(Crs::Slack::Client::SlackApiError, /Error inviting users/)
     end
   end
 
-  describe '#conversations_archive' do
+  describe "#conversations_archive" do
     it "チャンネルをアーカイブできる（モック）" do
       allow(client).to receive(:post).and_return({ "ok" => true })
       res = client.conversations_archive(channel: "C12345")
@@ -137,6 +138,111 @@ RSpec.describe Crs::Slack::Client do
       image = described_class.new(url: "https://example.com/img.png", alt_text: "img")
       expect(image.url).to eq("https://example.com/img.png")
       expect(image.alt_text).to eq("img")
+    end
+  end
+
+  # VCRを使用したテスト
+  describe "VCRを使用したAPIテスト" do
+    let(:vcr_client) { described_class.new(api_token: test_api_token) }
+
+    describe "#chat_post_message", vcr: { cassette_name: "slack/chat_post_message" } do
+      it "メッセージを送信できる" do
+        response = vcr_client.chat_post_message(
+          channel: "C08TH1GJPUZ", # テスト用チャンネルID
+          text: "VCRテスト: こんにちは！"
+        )
+        expect(response["ok"]).to be true
+        expect(response["message"]["text"]).to eq("VCRテスト: こんにちは！")
+      end
+    end
+
+    describe "#add_reply", vcr: { cassette_name: "slack/add_reply" } do
+      it "スレッドに画像付きリプライを送信できる" do
+        # まずメッセージを送信
+        message = vcr_client.chat_post_message(
+          channel: "C08TH1GJPUZ", # テスト用チャンネルID
+          text: "VCRテスト: 画像付きリプライのテスト"
+        )
+
+        # 送信したメッセージのスレッドに画像付きリプライを送信
+        image_url = Crs::Slack::Client::ImageUrl.new(
+          url: "https://image.lgtmoon.dev/517710",
+          alt_text: "LGTM画像"
+        )
+
+        response = vcr_client.add_reply(
+          channel: "C08TH1GJPUZ",
+          thread_ts: message["ts"],
+          image_urls: [image_url]
+        )
+
+        expect(response["ok"]).to be true
+        expect(response["message"]["thread_ts"]).to eq(message["ts"])
+      end
+    end
+
+    describe "#users_list", vcr: { cassette_name: "slack/users_list" } do
+      it "ユーザー一覧を取得できる" do
+        users = vcr_client.users_list
+        expect(users).to be_a(Hash)
+        expect(users).not_to be_empty
+
+        # 少なくとも1人のユーザーが含まれていることを確認
+        first_user = users.values.first
+        expect(first_user).to have_key(:id)
+        expect(first_user).to have_key(:display_name)
+        expect(first_user).to have_key(:name)
+        expect(first_user).to have_key(:real_name)
+      end
+    end
+
+    describe "#conversations_create", vcr: { cassette_name: "slack/conversations_create" } do
+      it "チャンネルを作成できる" do
+        # VCRカセットに合わせた固定のチャンネル名を使用
+        channel_name = "vcr-test-1719288455"
+
+        response = vcr_client.conversations_create(name: channel_name)
+        expect(response["ok"]).to be true
+        # チャンネル名が返されていることを確認（具体的な値は検証しない）
+        expect(response["channel"]["name"]).not_to be_empty
+
+        # テスト後にチャンネルをアーカイブ
+        vcr_client.conversations_archive(channel: response["channel"]["id"])
+      end
+    end
+
+    describe "#conversations_invite", vcr: { cassette_name: "slack/conversations_invite" } do
+      it "チャンネルにユーザーを招待できる" do
+        # VCRカセットに合わせた固定のチャンネル名を使用
+        channel_name = "vcr-invite-test-1719288465"
+        channel = vcr_client.conversations_create(name: channel_name)
+
+        # ユーザー一覧を取得して最初のユーザーを招待
+        users = vcr_client.users_list
+        first_user_id = users.values.first[:id]
+
+        response = vcr_client.conversations_invite(
+          channel: channel["channel"]["id"],
+          users: [first_user_id]
+        )
+
+        expect(response["ok"]).to be true
+
+        # テスト後にチャンネルをアーカイブ
+        vcr_client.conversations_archive(channel: channel["channel"]["id"])
+      end
+    end
+
+    describe "#conversations_archive", vcr: { cassette_name: "slack/conversations_archive" } do
+      it "チャンネルをアーカイブできる" do
+        # VCRカセットに合わせた固定のチャンネル名を使用
+        channel_name = "vcr-archive-test-1719288485"
+        channel = vcr_client.conversations_create(name: channel_name)
+
+        # チャンネルをアーカイブ
+        response = vcr_client.conversations_archive(channel: channel["channel"]["id"])
+        expect(response["ok"]).to be true
+      end
     end
   end
 end
