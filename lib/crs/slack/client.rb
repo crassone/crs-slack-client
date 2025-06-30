@@ -56,35 +56,38 @@ module Crs
         raise e
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-      def add_reply(channel:, thread_ts:, image_urls:)
-        uri = URI.join(SLACK_API_BASE_URL, "chat.postMessage")
-
-        blocks = image_urls.map do |image_url|
+      # 後方互換のため、旧インターフェースのメソッドを用意しておく。いつか消す。
+      def add_reply_rev1(channel:, thread_ts:, image_urls:)
+        images = image_urls.map do |image_url|
           {
             type: "image",
             image_url: image_url.url,
             alt_text: image_url.alt_text
           }
         end
+        blocks = JSON.generate(images)
+        add_reply(channel:, thread_ts:, blocks:)
+      end
+
+      def add_reply(channel:, thread_ts:, blocks:)
+        uri = URI.join(SLACK_API_BASE_URL, "chat.postMessage")
 
         params = {
-          channel: channel,
-          thread_ts: thread_ts,
-          blocks: JSON.generate(blocks)
+          channel:,
+          thread_ts:,
+          blocks:
         }
 
         result = post(uri, params)
         unless result["ok"]
           logger.error("Error posting reply: #{result["error"]}")
-          raise "Slack API error: #{result["error"]}"
+          raise SlackApiError, result["error"]
         end
         result
       rescue StandardError => e
         logger.error("Error posting reply: #{e.message}")
-        raise e
+        raise SlackApiError, "Error posting reply: #{e.message}"
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       # SlackのDisplay Nameをキーとして、Slackユーザーの一覧を返す。
       # @return [Hash] Slackユーザーの一覧。
